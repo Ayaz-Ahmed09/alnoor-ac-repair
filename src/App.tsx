@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import { MessageCircle, Phone } from 'lucide-react';
 
 export default function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+
   // Smooth scroll behavior
   useEffect(() => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -35,10 +37,10 @@ export default function App() {
       <Navbar />
       
       <main>
-        <Hero />
+        <Hero onSearch={setSearchQuery} />
         <Stats />
         <About />
-        <Services />
+        <Services searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         <CTA />
         <Testimonials />
         <FAQs />

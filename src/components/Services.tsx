@@ -1,124 +1,249 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { MessageCircle, Phone, ArrowRight } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { MessageCircle, Phone, ArrowRight, Search, Filter, Star } from 'lucide-react';
 
-const services = [
+const initialServices = [
   {
     title: 'AC Installation',
-    description: 'Professional installation of all types of AC units with optimal placement for maximum cooling.',
-    image: 'https://picsum.photos/seed/ac-install/600/400',
-    price: 'Starting from $99',
+    category: 'Installation',
+    description: 'Precision installation of premium cooling systems. We ensure perfect airflow and energy efficiency for your sanctuary.',
+    image: 'https://picsum.photos/seed/ac-install-v2/800/600',
+    price: 'From $99',
+    rating: 4.9,
   },
   {
     title: 'Repair & Maintenance',
-    description: 'Expert diagnostics and repair for any AC issue, from gas leaks to compressor failures.',
-    image: 'https://picsum.photos/seed/ac-repair-card/600/400',
-    price: 'Starting from $49',
+    category: 'Repair',
+    description: 'Surgical diagnostics and master repairs. From compressor failures to minor leaks, we restore perfection.',
+    image: 'https://picsum.photos/seed/ac-repair-v2/800/600',
+    price: 'From $49',
+    rating: 5.0,
   },
   {
     title: 'Gas Refilling',
-    description: 'High-quality refrigerant top-up and leak testing to ensure your AC blows ice-cold air.',
-    image: 'https://picsum.photos/seed/ac-gas/600/400',
-    price: 'Starting from $79',
+    category: 'Maintenance',
+    description: 'Premium refrigerant top-up with rigorous leak testing. Experience ice-cold air as it was meant to be.',
+    image: 'https://picsum.photos/seed/ac-gas-v2/800/600',
+    price: 'From $79',
+    rating: 4.8,
   },
   {
     title: 'Deep Cleaning',
-    description: 'Comprehensive jet cleaning of indoor and outdoor units to improve air quality and efficiency.',
-    image: 'https://picsum.photos/seed/ac-clean/600/400',
-    price: 'Starting from $59',
+    category: 'Cleaning',
+    description: 'High-pressure jet cleaning for pristine air quality. Breathe pure, allergen-free air every single day.',
+    image: 'https://picsum.photos/seed/ac-clean-v2/800/600',
+    price: 'From $59',
+    rating: 4.9,
   },
   {
     title: 'Duct Cleaning',
-    description: 'Removing dust and allergens from your ventilation system for a healthier home environment.',
-    image: 'https://picsum.photos/seed/ac-duct/600/400',
-    price: 'Starting from $129',
+    category: 'Cleaning',
+    description: 'Total ventilation purification. We eliminate dust, mold, and bacteria from your hidden air paths.',
+    image: 'https://picsum.photos/seed/ac-duct-v2/800/600',
+    price: 'From $129',
+    rating: 4.7,
   },
   {
     title: 'Commercial AMC',
-    description: 'Customized annual maintenance contracts for offices, malls, and industrial complexes.',
-    image: 'https://picsum.photos/seed/ac-commercial/600/400',
+    category: 'Commercial',
+    description: 'Elite maintenance contracts for enterprise cooling. Zero downtime, maximum productivity for your business.',
+    image: 'https://picsum.photos/seed/ac-commercial-v2/800/600',
     price: 'Custom Quote',
+    rating: 5.0,
   },
 ];
 
-export default function Services() {
+const categories = ['All', 'Installation', 'Repair', 'Maintenance', 'Cleaning', 'Commercial'];
+
+export default function Services({ searchQuery = '', onSearchChange }: { searchQuery?: string, onSearchChange?: (q: string) => void }) {
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filteredServices = useMemo(() => {
+    let filtered = initialServices.filter(service => {
+      const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
+      const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            service.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+
+    if (searchQuery.toLowerCase().includes('ac') && filtered.length === 0) {
+      const mockTitle = searchQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      filtered = [{
+        title: mockTitle,
+        category: 'Custom',
+        description: `Bespoke ${mockTitle} solutions tailored to your unique requirements. Master-level execution guaranteed.`,
+        image: `https://picsum.photos/seed/${searchQuery.replace(/\s/g, '')}/800/600`,
+        price: 'Custom Quote',
+        rating: 5.0,
+      }];
+    }
+
+    return filtered;
+  }, [searchQuery, activeCategory]);
+
   return (
-    <section id="services" className="bg-white py-24 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-text-main mb-4">
-            Our Premium <span className="text-primary">Services</span>
+    <section id="services" className="py-32 px-6 md:px-12 relative overflow-hidden">
+      {/* Background Accents */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -z-10" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -z-10" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-20">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-primary font-black uppercase tracking-[0.3em] text-sm mb-4 block"
+          >
+            Our Expertise
+          </motion.span>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-black text-text-main mb-6">
+            PREMIUM <span className="text-gradient">SERVICES</span>
           </h2>
-          <p className="text-lg text-text-main/60 max-w-2xl mx-auto">
-            We provide comprehensive cooling solutions tailored to your specific needs. 
-            Quality workmanship guaranteed on every job.
+          <p className="text-xl text-text-main/60 max-w-2xl mx-auto font-medium">
+            We don't just fix air conditioners; we engineer perfect environments. 
+            Discover our range of elite cooling solutions.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group bg-background rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-sm font-bold text-primary shadow-sm">
-                  {service.price}
-                </div>
-              </div>
-              
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-text-main mb-3">{service.title}</h3>
-                <p className="text-text-main/60 mb-8 leading-relaxed">
-                  {service.description}
-                </p>
-                
-                <div className="flex flex-col gap-3">
-                  <div className="flex gap-3">
-                    <a 
-                      href="#contact" 
-                      className="btn-primary flex-1 flex items-center justify-center gap-2 text-sm py-2.5"
-                    >
-                      Book Now
-                    </a>
-                    <a 
-                      href="https://wa.me/1234567890" 
-                      className="btn-outline flex-1 flex items-center justify-center gap-2 text-sm py-2.5"
-                    >
-                      <MessageCircle size={18} />
-                      WhatsApp
-                    </a>
-                  </div>
+        {/* Search and Filter Bar */}
+        <div className="glass p-4 rounded-[32px] mb-16 flex flex-col lg:flex-row gap-6 items-center justify-between shadow-2xl border-white/50">
+          <div className="flex items-center gap-3 w-full lg:w-auto overflow-x-auto pb-4 lg:pb-0 scrollbar-hide px-2">
+            <Filter size={20} className="text-primary flex-shrink-0" />
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-3 rounded-2xl font-bold text-sm whitespace-nowrap transition-all duration-300 ${
+                  activeCategory === category 
+                    ? 'bg-primary text-white shadow-xl shadow-primary/30 scale-105' 
+                    : 'bg-white/50 text-text-main hover:bg-white/80 border border-white/50'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          
+          <div className="relative w-full lg:w-96 group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110" size={24} />
+            <input
+              type="text"
+              placeholder="Search services..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 bg-white/50 backdrop-blur-sm border border-white/50 rounded-2xl outline-none focus:ring-4 focus:ring-primary/10 transition-all font-bold text-lg placeholder:text-text-main/30"
+            />
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <AnimatePresence mode="popLayout">
+            {filteredServices.map((service) => (
+              <motion.div
+                key={service.title}
+                layout
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                className="group glass-card flex flex-col"
+              >
+                <div className="relative h-72 rounded-[24px] overflow-hidden mb-8">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  {/* Mobile Call Button */}
-                  <a 
-                    href="tel:+1234567890" 
-                    className="md:hidden btn-outline flex items-center justify-center gap-2 text-sm py-2.5"
-                  >
-                    <Phone size={18} />
-                    Call Now
-                  </a>
+                  <div className="absolute top-4 right-4 glass px-5 py-2 rounded-full text-sm font-black text-primary border-white/50">
+                    {service.price}
+                  </div>
+                  <div className="absolute bottom-4 left-4 glass px-4 py-2 rounded-full text-xs font-black text-text-main border-white/50 flex items-center gap-2">
+                    <Star size={14} className="fill-primary text-primary" />
+                    {service.rating}
+                  </div>
                 </div>
+                
+                <div className="flex flex-col flex-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-black text-primary uppercase tracking-widest">{service.category}</span>
+                  </div>
+                  <h3 className="text-3xl font-display font-black text-text-main mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <p className="text-text-main/60 mb-10 leading-relaxed font-medium">
+                    {service.description}
+                  </p>
+                  
+                  <div className="flex flex-col gap-4 mt-auto">
+                    {/* Desktop View */}
+                    <div className="hidden md:flex gap-4">
+                      <a 
+                        href="#contact" 
+                        className="btn-primary flex-1 py-4 text-base"
+                      >
+                        Book Now
+                      </a>
+                      <a 
+                        href="https://wa.me/1234567890" 
+                        className="btn-outline flex-1 py-4 text-base"
+                      >
+                        <MessageCircle size={20} />
+                        WhatsApp
+                      </a>
+                    </div>
+                    
+                    {/* Mobile View - No Book Now button */}
+                    <div className="flex md:hidden gap-4">
+                      <a 
+                        href="https://wa.me/1234567890" 
+                        className="btn-primary flex-1 py-4 text-base bg-[#25D366] border-none hover:bg-[#128C7E]"
+                      >
+                        <MessageCircle size={20} />
+                        WhatsApp
+                      </a>
+                      <a 
+                        href="tel:+1234567890" 
+                        className="btn-primary flex-1 py-4 text-base"
+                      >
+                        <Phone size={20} />
+                        Call Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          
+          {filteredServices.length === 0 && (
+            <div className="col-span-full py-24 text-center glass rounded-[40px] border-dashed border-2 border-primary/20">
+              <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search size={40} />
               </div>
-            </motion.div>
-          ))}
+              <p className="text-2xl text-text-main font-black mb-4">No services match your search</p>
+              <p className="text-text-main/60 max-w-md mx-auto mb-8 font-medium">
+                Try searching for something else or clear the filters to see all our premium services.
+              </p>
+              <button 
+                onClick={() => { setActiveCategory('All'); onSearchChange?.(''); }}
+                className="btn-primary px-10"
+              >
+                Clear All Filters
+              </button>
+            </div>
+          )}
         </div>
         
-        <div className="mt-16 text-center">
-          <p className="text-text-main/70 mb-6">Need a custom solution for your project?</p>
-          <a href="#contact" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all">
-            Get a Free Consultation <ArrowRight size={20} />
-          </a>
+        <div className="mt-24 text-center">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="inline-block p-1 rounded-[32px] bg-gradient-to-r from-primary to-accent shadow-2xl"
+          >
+            <a href="#contact" className="flex items-center gap-4 px-12 py-6 bg-white rounded-[28px] text-xl font-black text-text-main hover:bg-transparent hover:text-white transition-all">
+              Request Custom Solution <ArrowRight size={24} />
+            </a>
+          </motion.div>
         </div>
       </div>
     </section>

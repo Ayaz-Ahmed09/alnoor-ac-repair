@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, MessageCircle } from 'lucide-react';
-import { cn } from '../lib/utils';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,14 +23,15 @@ export default function Navbar() {
 
   return (
     <nav
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-12',
-        isScrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-6'
-      )}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 md:px-12 ${
+        isScrolled ? 'py-3' : 'py-6'
+      }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+      <div className={`max-w-7xl mx-auto flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-500 ${
+        isScrolled ? 'glass shadow-lg' : 'bg-transparent'
+      }`}>
+        <a href="#" className="flex items-center gap-2 group">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
             <span className="text-white font-bold text-xl">C</span>
           </div>
           <span className="text-2xl font-display font-bold text-text-main">
@@ -45,12 +45,12 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className="text-text-main font-medium hover:text-primary transition-colors"
+              className="text-text-main font-bold hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
             >
               {link.name}
             </a>
           ))}
-          <a href="https://wa.me/1234567890" className="btn-primary flex items-center gap-2">
+          <a href="https://wa.me/1234567890" className="btn-primary">
             <MessageCircle size={20} />
             WhatsApp
           </a>
@@ -58,32 +58,32 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-text-main"
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-100 p-6 flex flex-col gap-4 shadow-xl animate-in slide-in-from-top duration-300">
+        <div className="md:hidden fixed inset-0 z-[-1] bg-background/95 backdrop-blur-xl p-8 flex flex-col gap-6 pt-24 animate-in fade-in slide-in-from-top-4 duration-300">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-lg font-medium text-text-main"
+              className="text-2xl font-bold text-text-main border-b border-primary/10 pb-4"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
             </a>
           ))}
-          <div className="flex flex-col gap-3 pt-4">
-            <a href="tel:+1234567890" className="btn-outline flex items-center justify-center gap-2">
+          <div className="flex flex-col gap-4 mt-auto">
+            <a href="tel:+1234567890" className="btn-outline w-full py-4">
               <Phone size={20} />
               Call Now
             </a>
-            <a href="https://wa.me/1234567890" className="btn-primary flex items-center justify-center gap-2">
+            <a href="https://wa.me/1234567890" className="btn-primary w-full py-4">
               <MessageCircle size={20} />
               WhatsApp
             </a>

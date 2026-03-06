@@ -1,90 +1,94 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Heart } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-text-main text-white pt-20 pb-10 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <div>
-            <a href="#" className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
+    <footer className="bg-text-main text-white pt-32 pb-12 px-6 md:px-12 relative overflow-hidden">
+      {/* Decorative Orbs */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] -z-0" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px] -z-0" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+          <div className="space-y-8">
+            <a href="#" className="flex items-center gap-3 group">
+              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-xl shadow-primary/20 group-hover:rotate-12 transition-transform">
+                <span className="text-white font-black text-2xl">C</span>
               </div>
-              <span className="text-2xl font-display font-bold text-white">
+              <span className="text-3xl font-display font-black">
                 Cool<span className="text-primary">Flow</span>
               </span>
             </a>
-            <p className="text-white/60 leading-relaxed mb-8">
-              Providing premium air conditioning solutions for homes and businesses since 2012. 
-              Your comfort is our top priority.
+            <p className="text-white/60 text-lg leading-relaxed font-medium">
+              Providing elite cooling solutions with surgical precision. Your comfort is our masterwork.
             </p>
             <div className="flex gap-4">
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors"
+                <a 
+                  key={i} 
+                  href="#" 
+                  className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary transition-all hover:-translate-y-1"
                 >
                   <Icon size={20} />
                 </a>
               ))}
             </div>
           </div>
-          
+
           <div>
-            <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+            <h4 className="text-xl font-black mb-8 uppercase tracking-widest text-primary">Quick Links</h4>
             <ul className="space-y-4">
-              {['Home', 'About Us', 'Services', 'FAQs', 'Contact'].map((link) => (
+              {['Home', 'About Us', 'Our Services', 'FAQs', 'Contact Us'].map((link) => (
                 <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(' ', '-')}`} className="text-white/60 hover:text-primary transition-colors">
+                  <a href={`#${link.toLowerCase().replace(' ', '')}`} className="text-white/60 hover:text-primary transition-colors font-bold text-lg flex items-center gap-2 group">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                     {link}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="text-lg font-bold mb-6">Our Services</h4>
+            <h4 className="text-xl font-black mb-8 uppercase tracking-widest text-primary">Services</h4>
             <ul className="space-y-4">
               {['AC Installation', 'Repair & Maintenance', 'Gas Refilling', 'Deep Cleaning', 'Commercial AMC'].map((service) => (
                 <li key={service}>
-                  <a href="#services" className="text-white/60 hover:text-primary transition-colors">
+                  <a href="#services" className="text-white/60 hover:text-primary transition-colors font-bold text-lg flex items-center gap-2 group">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                     {service}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="text-lg font-bold mb-6">Newsletter</h4>
-            <p className="text-white/60 mb-6 text-sm">
-              Subscribe to get maintenance tips and exclusive offers.
-            </p>
-            <form className="flex gap-2">
+            <h4 className="text-xl font-black mb-8 uppercase tracking-widest text-primary">Newsletter</h4>
+            <p className="text-white/60 mb-6 font-medium">Subscribe for elite maintenance tips and exclusive offers.</p>
+            <form className="space-y-4">
               <input
                 type="email"
-                placeholder="Your email"
-                className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm flex-1 outline-none focus:border-primary transition-colors"
+                placeholder="Your email address"
+                className="w-full px-6 py-4 bg-white/5 rounded-2xl border border-white/10 focus:border-primary outline-none transition-all font-bold"
               />
-              <button className="bg-primary p-3 rounded-xl hover:bg-accent transition-colors">
-                <Heart size={20} />
+              <button className="btn-primary w-full py-4 text-lg shadow-xl shadow-primary/20">
+                Subscribe Now
               </button>
             </form>
           </div>
         </div>
-        
-        <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-white/40 text-sm">
-            © {currentYear} CoolFlow AC Services. All rights reserved.
+
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
+          <p className="text-white/40 font-bold">
+            © {currentYear} CoolFlow Masterworks. All rights reserved.
           </p>
-          <div className="flex gap-8 text-sm text-white/40">
+          <div className="flex gap-10 text-white/40 font-bold text-sm">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>

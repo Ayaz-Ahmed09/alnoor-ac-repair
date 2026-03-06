@@ -6,73 +6,79 @@ const testimonials = [
   {
     name: 'Sarah Johnson',
     role: 'Homeowner',
-    image: 'https://picsum.photos/seed/sarah/100/100',
-    content: 'CoolFlow saved us during the heatwave! Their technician arrived within 30 minutes and fixed our AC in no time. Highly recommend their professional service.',
+    content: 'CoolFlow saved my summer! Their technician arrived within 30 minutes and fixed my AC compressor with absolute precision. Truly elite service.',
     rating: 5,
+    image: 'https://picsum.photos/seed/sarah/100/100',
   },
   {
     name: 'Michael Chen',
     role: 'Business Owner',
-    image: 'https://picsum.photos/seed/michael/100/100',
-    content: 'We use their AMC for our office building. Their preventive maintenance has significantly reduced our energy bills and downtime. Excellent team!',
+    content: 'We use CoolFlow for all our commercial properties. Their AMC plans are the best in the industry—zero downtime and perfect maintenance.',
     rating: 5,
+    image: 'https://picsum.photos/seed/michael/100/100',
   },
   {
-    name: 'Emily Davis',
-    role: 'Apartment Manager',
-    image: 'https://picsum.photos/seed/emily/100/100',
-    content: 'Transparent pricing and honest advice. They don\'t try to sell you parts you don\'t need. It\'s hard to find such trustworthy service these days.',
+    name: 'Emma Williams',
+    role: 'Interior Designer',
+    content: 'As a designer, I appreciate their attention to detail. Not only is the cooling perfect, but their installation is clean and aesthetically flawless.',
     rating: 5,
+    image: 'https://picsum.photos/seed/emma/100/100',
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="bg-white py-24 px-6 md:px-12">
+    <section className="section-padding relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -z-10" />
+      
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-text-main mb-4">
-            What Our <span className="text-primary">Clients Say</span>
+        <div className="text-center mb-20">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-primary font-black uppercase tracking-[0.3em] text-sm mb-4 block"
+          >
+            Client Stories
+          </motion.span>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-black text-text-main mb-6">
+            TRUSTED BY <span className="text-gradient">THOUSANDS</span>
           </h2>
-          <p className="text-lg text-text-main/60 max-w-2xl mx-auto">
-            Real stories from real customers who trust us with their comfort.
-          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+        <div className="grid md:grid-cols-3 gap-10">
+          {testimonials.map((t, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-background p-8 rounded-3xl border border-gray-100 shadow-sm relative"
+              className="glass-card flex flex-col group"
             >
-              <div className="absolute top-8 right-8 text-primary/10">
-                <Quote size={48} />
+              <div className="mb-8 relative">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary text-white rounded-2xl flex items-center justify-center shadow-xl shadow-primary/30 group-hover:rotate-12 transition-transform">
+                  <Quote size={24} fill="currentColor" />
+                </div>
+                <div className="flex gap-1 mb-4 pt-4">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} size={18} className="fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-xl text-text-main/70 leading-relaxed font-medium italic">
+                  "{t.content}"
+                </p>
               </div>
               
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={18} className="fill-primary text-primary" />
-                ))}
-              </div>
-              
-              <p className="text-text-main/80 mb-8 leading-relaxed italic">
-                "{testimonial.content}"
-              </p>
-              
-              <div className="flex items-center gap-4">
+              <div className="mt-auto flex items-center gap-5 pt-8 border-t border-primary/10">
                 <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
+                  src={t.image}
+                  alt={t.name}
+                  className="w-16 h-16 rounded-2xl object-cover shadow-lg border-2 border-white"
                   referrerPolicy="no-referrer"
                 />
                 <div>
-                  <h4 className="font-bold text-text-main">{testimonial.name}</h4>
-                  <p className="text-xs text-text-main/60 font-medium">{testimonial.role}</p>
+                  <h4 className="text-xl font-black text-text-main">{t.name}</h4>
+                  <p className="text-sm text-primary font-black uppercase tracking-widest">{t.role}</p>
                 </div>
               </div>
             </motion.div>

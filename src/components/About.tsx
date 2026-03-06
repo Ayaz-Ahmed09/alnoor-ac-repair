@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle2, ShieldCheck, Zap, ThermometerSnowflake } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Zap, ThermometerSnowflake, ArrowRight } from 'lucide-react';
 
 const features = [
   { title: 'Certified Technicians', description: 'Our team is fully licensed and trained to handle all major AC brands.', icon: ShieldCheck },
@@ -12,16 +12,16 @@ const features = [
 export default function About() {
   return (
     <section id="about" className="section-padding overflow-hidden">
-      <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="grid lg:grid-cols-2 gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           className="relative"
         >
-          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative z-10 rounded-[48px] overflow-hidden shadow-2xl border-[12px] border-white floating">
             <img
-              src="https://picsum.photos/seed/ac-technician/800/1000"
+              src="https://picsum.photos/seed/ac-technician-v2/800/1000"
               alt="Our Expert Technician"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
@@ -29,13 +29,18 @@ export default function About() {
           </div>
           
           {/* Floating Experience Badge */}
-          <div className="absolute -bottom-10 -right-10 z-20 bg-primary p-8 rounded-3xl shadow-2xl text-white text-center">
-            <p className="text-5xl font-bold mb-1">12+</p>
-            <p className="text-sm font-medium opacity-90">Years of Excellence</p>
-          </div>
+          <motion.div 
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            className="absolute -bottom-10 -right-10 z-20 bg-primary p-6 sm:p-10 rounded-[40px] shadow-2xl text-white text-center border-4 border-white"
+          >
+            <p className="text-4xl sm:text-6xl font-black mb-1">12+</p>
+            <p className="text-[10px] sm:text-sm font-black uppercase tracking-widest opacity-90">Years of Excellence</p>
+          </motion.div>
           
           {/* Decorative Background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[100px] -z-10" />
         </motion.div>
         
         <motion.div
@@ -44,33 +49,35 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-text-main mb-6 leading-tight">
-            We Bring <span className="text-primary text-6xl">Coolness</span> <br />
-            Back to Your Life
+          <span className="text-primary font-black uppercase tracking-[0.3em] text-sm mb-4 block">Our Story</span>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-display font-black text-text-main mb-8 leading-[0.9]">
+            WE BRING <span className="text-gradient">COOLNESS</span> <br />
+            BACK TO LIFE
           </h2>
           
-          <p className="text-lg text-text-main/70 mb-10 leading-relaxed">
-            At CoolFlow, we understand that a malfunctioning AC is more than just an inconvenience—it's a disruption to your peace of mind. 
-            That's why we've dedicated over a decade to providing top-tier cooling solutions with a commitment to quality and speed.
+          <p className="text-xl text-text-main/70 mb-12 leading-relaxed font-medium">
+            At CoolFlow, we understand that a malfunctioning AC is more than just an inconvenience—it's a disruption to your sanctuary. 
+            We've dedicated over a decade to providing elite cooling solutions with a commitment to surgical precision and speed.
           </p>
           
-          <div className="grid sm:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-10">
             {features.map((feature, index) => (
-              <div key={index} className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-primary">
-                  <feature.icon size={24} />
+              <div key={index} className="flex gap-5 group">
+                <div className="flex-shrink-0 w-14 h-14 glass rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-lg">
+                  <feature.icon size={28} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-text-main mb-2">{feature.title}</h4>
-                  <p className="text-sm text-text-main/60 leading-relaxed">{feature.description}</p>
+                  <h4 className="text-xl font-black text-text-main mb-2 tracking-tight">{feature.title}</h4>
+                  <p className="text-sm text-text-main/60 leading-relaxed font-medium">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
           
-          <div className="mt-12">
-            <a href="#contact" className="btn-primary inline-flex items-center gap-2">
-              Learn More About Us
+          <div className="mt-16">
+            <a href="#contact" className="btn-primary text-lg px-10 py-5 shadow-xl shadow-primary/20">
+              Discover Our Process
+              <ArrowRight size={24} />
             </a>
           </div>
         </motion.div>
