@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion } from 'motion/react';
 import { Send, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -16,6 +17,8 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -26,16 +29,37 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Form Submitted:', data);
-    alert('Thank you! Your request has been received. We will contact you shortly.');
-    reset();
+    try {
+      const formData = new globalThis.FormData();
+      formData.append("access_key", "efb33a90-28a7-4fd7-b764-04af255fc551");
+
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value as string);
+      });
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        reset();
+        navigate('/thank-you', { state: { success: true } });
+      } else {
+        alert("Something went wrong! Please try again.");
+        console.error("Web3Forms error:", result);
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert("Network error, please try again.");
+    }
   };
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden">
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-      
+
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -50,7 +74,7 @@ export default function ContactForm() {
           <p className="text-xl text-text-main/60 mb-12 leading-relaxed font-medium">
             Our master technicians are standing by. Fill out the form and experience the elite CoolFlow service.
           </p>
-          
+
           <div className="space-y-10">
             {[
               { icon: Phone, title: 'Call Us', value: '+1 (234) 567-890', sub: 'Available 24/7' },
@@ -69,7 +93,7 @@ export default function ContactForm() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-16 glass p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] border-white/50 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <MessageCircle size={120} />
@@ -81,15 +105,15 @@ export default function ContactForm() {
             <p className="text-lg text-text-main/60 mb-8 leading-relaxed font-medium">
               Send us a message for an instant booking and real-time support.
             </p>
-            <a 
-              href="https://wa.me/1234567890" 
+            <a
+              href="https://wa.me/1234567890"
               className="btn-primary inline-flex items-center gap-3 w-full justify-center py-5 text-xl shadow-xl shadow-primary/20"
             >
               Chat on WhatsApp
             </a>
           </div>
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -98,7 +122,7 @@ export default function ContactForm() {
           className="glass p-6 sm:p-10 md:p-16 rounded-[32px] sm:rounded-[64px] shadow-2xl border-white/60 relative"
         >
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-          
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="space-y-3">
@@ -110,7 +134,7 @@ export default function ContactForm() {
                 />
                 {errors.name && <p className="text-xs text-red-500 font-bold ml-1">{errors.name.message}</p>}
               </div>
-              
+
               <div className="space-y-3">
                 <label className="text-sm font-black text-text-main uppercase tracking-widest ml-1">Phone Number</label>
                 <input
@@ -121,7 +145,7 @@ export default function ContactForm() {
                 {errors.phone && <p className="text-xs text-red-500 font-bold ml-1">{errors.phone.message}</p>}
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <label className="text-sm font-black text-text-main uppercase tracking-widest ml-1">Email Address</label>
               <input
@@ -131,7 +155,7 @@ export default function ContactForm() {
               />
               {errors.email && <p className="text-xs text-red-500 font-bold ml-1">{errors.email.message}</p>}
             </div>
-            
+
             <div className="space-y-3">
               <label className="text-sm font-black text-text-main uppercase tracking-widest ml-1">Select Service</label>
               <select
@@ -147,7 +171,7 @@ export default function ContactForm() {
               </select>
               {errors.service && <p className="text-xs text-red-500 font-bold ml-1">{errors.service.message}</p>}
             </div>
-            
+
             <div className="space-y-3">
               <label className="text-sm font-black text-text-main uppercase tracking-widest ml-1">Your Message</label>
               <textarea
@@ -158,7 +182,7 @@ export default function ContactForm() {
               />
               {errors.message && <p className="text-xs text-red-500 font-bold ml-1">{errors.message.message}</p>}
             </div>
-            
+
             <button
               type="submit"
               disabled={isSubmitting}

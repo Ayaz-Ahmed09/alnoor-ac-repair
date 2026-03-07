@@ -21,15 +21,15 @@ export default function About() {
         >
           <div className="relative z-10 rounded-[48px] overflow-hidden shadow-2xl border-[12px] border-white floating">
             <img
-              src="https://picsum.photos/seed/ac-technician-v2/800/1000"
+              src="/about-2.png"
               alt="Our Expert Technician"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
           </div>
-          
+
           {/* Floating Experience Badge */}
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
@@ -38,11 +38,11 @@ export default function About() {
             <p className="text-4xl sm:text-6xl font-black mb-1">12+</p>
             <p className="text-[10px] sm:text-sm font-black uppercase tracking-widest opacity-90">Years of Excellence</p>
           </motion.div>
-          
+
           {/* Decorative Background */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[100px] -z-10" />
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -54,12 +54,12 @@ export default function About() {
             WE BRING <span className="text-gradient">COOLNESS</span> <br />
             BACK TO LIFE
           </h2>
-          
+
           <p className="text-xl text-text-main/70 mb-12 leading-relaxed font-medium">
-            At CoolFlow, we understand that a malfunctioning AC is more than just an inconvenience—it's a disruption to your sanctuary. 
+            At CoolFlow, we understand that a malfunctioning AC is more than just an inconvenience—it's a disruption to your sanctuary.
             We've dedicated over a decade to providing elite cooling solutions with a commitment to surgical precision and speed.
           </p>
-          
+
           <div className="grid sm:grid-cols-2 gap-10">
             {features.map((feature, index) => (
               <div key={index} className="flex gap-5 group">
@@ -73,7 +73,7 @@ export default function About() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-16">
             <a href="#contact" className="btn-primary text-lg px-10 py-5 shadow-xl shadow-primary/20">
               Discover Our Process

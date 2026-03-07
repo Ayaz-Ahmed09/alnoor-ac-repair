@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Phone, MessageCircle, ArrowRight, Search, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Hero({ onSearch }: { onSearch?: (q: string) => void }) {
   const [localQuery, setLocalQuery] = useState('');
@@ -16,14 +17,14 @@ export default function Hero({ onSearch }: { onSearch?: (q: string) => void }) {
       {/* Background Orbs */}
       <div className="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
       <div className="absolute -bottom-48 -left-48 -z-10 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px]" />
-      
+
       <div className="section-padding grid lg:grid-cols-2 gap-16 items-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full font-bold text-sm mb-8 text-primary border-primary/20"
@@ -34,58 +35,57 @@ export default function Hero({ onSearch }: { onSearch?: (q: string) => void }) {
             </span>
             24/7 EMERGENCY REPAIR
           </motion.div>
-          
+
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black text-text-main leading-[0.9] mb-8">
-            STAY COOL <br />
             <span className="text-gradient">EXPERT AC</span> <br />
             REPAIR
           </h1>
-          
-          <p className="text-xl text-text-main/70 mb-10 max-w-lg leading-relaxed font-medium">
-            Premium air conditioning solutions for your sanctuary. 
+
+          <p className="text-base sm:text-lg text-text-main/70 mb-8 sm:mb-10 max-w-lg leading-relaxed font-medium">
+            Premium air conditioning solutions for your sanctuary.
             Our master technicians restore your comfort with surgical precision.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-5 mb-12">
-            <a href="#contact" className="btn-primary text-xl px-10 py-5 shadow-2xl shadow-primary/30">
+
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-10 sm:mb-12">
+            <Link to="/book" className="btn-primary flex justify-center items-center gap-2 text-lg sm:text-xl w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 shadow-2xl shadow-primary/30">
               Book Now
-              <ArrowRight size={24} />
-            </a>
-            
-            <div className="flex gap-4">
-              <a 
-                href="https://wa.me/1234567890" 
-                className="btn-outline px-8 py-5 flex-1 sm:flex-none bg-white/50 backdrop-blur-sm"
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            </Link>
+
+            <div className="flex gap-3 sm:gap-4 w-full sm:w-auto">
+              <a
+                href="https://wa.me/1234567890"
+                className="btn-outline flex justify-center items-center gap-2 px-4 sm:px-8 py-4 sm:py-5 flex-1 sm:flex-none bg-white/50 backdrop-blur-sm text-sm sm:text-base"
               >
-                <MessageCircle size={24} />
+                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 WhatsApp
               </a>
-              <a 
-                href="tel:+1234567890" 
-                className="md:hidden btn-outline px-8 py-5 flex-1"
+              <a
+                href="tel:+1234567890"
+                className="md:hidden btn-outline flex justify-center items-center gap-2 px-4 sm:px-8 py-4 sm:py-5 flex-1 text-sm sm:text-base"
               >
-                <Phone size={24} />
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
                 Call
               </a>
             </div>
           </div>
 
-          <form onSubmit={handleSearch} className="glass p-3 rounded-[24px] flex flex-col sm:flex-row items-center gap-3 max-w-xl relative z-20 shadow-2xl border-white/50">
-            <div className="flex items-center flex-1 w-full px-4">
-              <Search className="text-primary" size={24} />
+          <form onSubmit={handleSearch} className="glass p-2 sm:p-3 rounded-[20px] sm:rounded-[24px] flex flex-col sm:flex-row items-center gap-2 sm:gap-3 max-w-xl relative z-20 shadow-2xl border-white/50">
+            <div className="flex items-center flex-1 w-full px-2 sm:px-4">
+              <Search className="text-primary w-5 h-5 sm:w-6 sm:h-6" />
               <input
                 type="text"
                 placeholder="What service do you need?"
-                className="flex-1 bg-transparent border-none outline-none px-4 py-4 text-text-main placeholder:text-text-main/40 font-bold text-lg"
+                className="flex-1 bg-transparent border-none outline-none px-3 py-3 sm:px-4 sm:py-4 text-text-main placeholder:text-text-main/40 font-bold text-sm sm:text-lg"
                 value={localQuery}
                 onChange={(e) => setLocalQuery(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn-primary w-full sm:w-auto py-4 px-10 rounded-2xl shadow-xl">
+            <button type="submit" className="btn-primary w-full sm:w-auto flex justify-center items-center py-3 sm:py-4 px-8 sm:px-10 rounded-xl sm:rounded-2xl shadow-xl text-sm sm:text-base">
               Search
             </button>
           </form>
-          
+
           <div className="mt-12 flex items-center gap-6">
             <div className="flex -space-x-4">
               {[1, 2, 3, 4].map((i) => (
@@ -108,23 +108,23 @@ export default function Hero({ onSearch }: { onSearch?: (q: string) => void }) {
             </div>
           </div>
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="relative lg:ml-auto"
+          className="relative lg:ml-auto mt-12 lg:mt-0"
         >
-          <div className="relative z-10 rounded-[48px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(255,92,0,0.2)] border-[12px] border-white floating">
+          <div className="relative z-10 rounded-[32px] sm:rounded-[48px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(255,92,0,0.2)] border-8 sm:border-12 border-white floating">
             <img
-              src="https://picsum.photos/seed/ac-repair-hero/1000/1200"
+              src="/Hero.png"
               alt="Master Technician"
-              className="w-full aspect-[4/5] object-cover"
+              className="w-full aspect-square md:aspect-4/3 lg:aspect-3/2 object-cover"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" /> */}
           </div>
-          
+
           {/* Floating Glass Cards */}
           <motion.div
             animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
@@ -154,7 +154,7 @@ export default function Hero({ onSearch }: { onSearch?: (q: string) => void }) {
               <p className="font-black text-text-main">4.9/5 Rating</p>
             </div>
           </motion.div>
-          
+
           {/* Decorative Circles */}
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl -z-10 animate-pulse" />
         </motion.div>
